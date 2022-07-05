@@ -33,8 +33,9 @@ commands:
   #         name: Destroy environments
   #         when: on_fail
   #         command: |
-  #           aws cloudformation delete-stack --stack-name "udapeople-backend-
-  #           exit 1
+  #           aws cloudformation delete-stack --stack-name "udapeople-backend- << parameters.WORKFLOW_ID >>
+  #           aws s3 rm s3://udapeople- << parameters.WORKFLOW_ID >> --recursive
+  #           aws cloudformation delete-stack --stack-name "udapeople-frontend- << parameters.WORKFLOW_ID >>
 
 #   revert-migrations:
 #     description: Revert the last migration if successfully run in the current workflow.
@@ -179,7 +180,7 @@ jobs:
           command: |
             BACKEND_PUBLIC_IP=$(aws ec2 describe-instances \
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-            --query 'Reservations[*].Instances[*].PublicIpAddress'
+            --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --output text)
             echo $BACKEND_PUBLIC_IP >> .circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt
@@ -188,7 +189,7 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      # Here's where you will add some code to rollback on failure      
+      # - destroy-environment      
 
 #   configure-infrastructure:
 #     docker:
