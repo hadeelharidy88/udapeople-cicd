@@ -202,12 +202,12 @@ jobs:
           fingerprints: ["10:f6:50:aa:17:62:45:c5:8b:65:52:d6:29:b0:49:c1"]
       - attach_workspace:
           at: ~/
-      -run:
-        name: Configure Server
-        command: |
-          cd .circleci/ansible
-          cat inventory.txt
-          ansible-playbook -i inventory.txt configure-server.yml
+      - run:
+          name: Configure Server
+          command: |
+            cd .circleci/ansible
+            cat inventory.txt
+            ansible-playbook -i inventory.txt configure-server.yml
 
       # - run:
       #     name: Install dependencies
