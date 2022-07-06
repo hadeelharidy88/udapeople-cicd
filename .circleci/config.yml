@@ -260,7 +260,7 @@ jobs:
 
   deploy-frontend:
     docker:
-      # Docker image here that supports AWS CLI
+      - image: cimg/base:stable
     steps:
       - checkout
       - install_nodejs
