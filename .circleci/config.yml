@@ -61,7 +61,7 @@ commands:
           
           command: |
             
-            SUCCESS=$(curl --insecure https://kvdb.io/UB2G7W2e4HVL4o6HtiLwNg/migration_${CIRCLE_WORKFLOW_ID:0:7})
+            SUCCESS=$(curl --insecure https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7})
             
             if(( $SUCCESS==1 )); 
             then
@@ -251,7 +251,7 @@ jobs:
           command: |
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
-              curl https://kvdb.io/UB2G7W2e4HVL4o6HtiLwNg/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '2'
+              curl https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '2'
             fi
             
       - destroy-environment
